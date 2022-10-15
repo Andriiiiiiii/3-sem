@@ -3,7 +3,7 @@
 
 using namespace std;
 
-struct Point 
+struct Point
 {
     unsigned long long x, y;
     Point(unsigned long long x, unsigned long long y) : x(x), y(y) { }
@@ -19,27 +19,27 @@ struct Point
     Point maxy(Point const& rha) const {
         return Point(x, rha.y > y ? rha.y : y);
     }
-    void operator=(Point const& other) 
+    void operator=(Point const& other)
     {
         x = other.x;
         y = other.y;
     }
-    void print() const 
+    void print() const
     {
         cout << "(" << x << "," << y << ")" << endl;
     }
 };
 
-class Rectangle 
+class Rectangle
 {
 public:
     Rectangle(Point const& point) : point(point) { }
     Rectangle() : Rectangle(Point(0, 0)) { }
-    void print() const 
+    void print() const
     {
         point.print();
     }
-    Rectangle operator*(const Rectangle& rha) const 
+    Rectangle operator*(const Rectangle& rha) const
     {
         Rectangle minx = Rectangle(point.minx(rha.point));
         Rectangle miny = Rectangle(minx.point.miny(rha.point));
@@ -67,7 +67,7 @@ private:
 };
 
 
-Rectangle StrtoRec(int& i, string str) 
+Rectangle StrtoRec(int& i, string str)
 {
     int x = 0;
     i++;
@@ -87,11 +87,11 @@ Rectangle StrtoRec(int& i, string str)
     return rec;
 }
 
-Rectangle get_res(string str) 
+Rectangle get_res(string str)
 {
     int mult = 0;
     int brackets = 0;
-    for (char c : str) 
+    for (char c : str)
     {
         if (c == '*')
         {
@@ -105,17 +105,17 @@ Rectangle get_res(string str)
     Rectangle* rec_to_sum = new Rectangle[brackets - mult];
     int i = 0;
     int k = 0;
-    while (i < str.length()) 
+    while (i < str.length())
     {
         Rectangle a(Point(0, 0));
-        if (str[i] == '(') 
+        if (str[i] == '(')
         {
             Rectangle tmp = StrtoRec(i, str);
             a += tmp;
         }
-        if (not(++i == str.length())) 
+        if (not(++i == str.length()))
         {
-            while (str[i] == '*') 
+            while (str[i] == '*')
             {
                 i++;
                 Rectangle tmp = StrtoRec(i, str);
@@ -128,7 +128,7 @@ Rectangle get_res(string str)
         k++;
     }
     Rectangle result;
-    for (i = 0; i < brackets - mult; ++i) 
+    for (i = 0; i < brackets - mult; ++i)
     {
         result += rec_to_sum[i];
     }
@@ -136,7 +136,7 @@ Rectangle get_res(string str)
     return result;
 }
 
-int main() 
+int main()
 {
     string str;
     getline(cin, str);
